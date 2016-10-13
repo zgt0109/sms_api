@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mobile: MyString
+  code: MyString
+  send_at: 2016-10-13 09:58:58
+
+two:
+  mobile: MyString
+  code: MyString
+  send_at: 2016-10-13 09:58:58
