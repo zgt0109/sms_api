@@ -1,24 +1,36 @@
-# README
+### 短信发送验证接口
+#### 1.发送验证码
+|请求地址|http://sms.bianfu360.cn/bianfu-sms-api/send_sms|
+| :-------- | :--: |
+|请求方式|post|
+|返回数据类型|json|
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+####请求参数
+| 参数名     |  数据类型| 是否必选 | 备注 |
+| :-------- | -------:| ------:|:--: |
+| mobile    | string     | true  |手机号|
 
-Things you may want to cover:
+####返回参数
+| 参数名     |  数据类型| 备注 |
+| :-------- | -------:|:--: |
+|msg|string|提示信息|
+|code|string|状态码|
+|data|string|返回数据|
 
-* Ruby version
+####2.验证验证码
+|请求地址|http://sms.bianfu360.cn/bianfu-sms-api/validate|
+| :-------- | :--: |
+|请求方式|post|
+|返回数据类型|json|
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+#####请求参数
+| 参数名     |  数据类型| 是否必选 | 备注 |
+| :-------- | -------:| ------:|:--: |
+| mobile    | string   |  true  |手机号|
+|code|string|true|验证码|
+#####返回参数
+| 参数名     |  数据类型| 备注 |
+| :-------- | -------:| :--: |
+| msg   | string    |提示信息|
+|code|string|状态码|
+|data|string|返回数据|

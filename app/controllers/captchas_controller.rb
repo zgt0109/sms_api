@@ -30,12 +30,9 @@ class CaptchasController < ApplicationController
 			render json: result
 			return
 		end
-	    if
-			result["msg"] ="验证码成功"
-			result["code"] = :ok
-			render json: result
-			return
-		end
-		
+		result["msg"] ="验证码成功"
+		result["code"] = :ok
+		result["data"] = ncode
+		render json: result
 	end
 end
