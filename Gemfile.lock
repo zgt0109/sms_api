@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/saberma/china_sms.git
+  revision: 0358a6090af266860066da9f3982230199c53384
+  specs:
+    china_sms (0.0.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -132,6 +138,7 @@ PLATFORMS
 DEPENDENCIES
   annotate (~> 2.7, >= 2.7.1)
   byebug
+  china_sms!
   listen (~> 3.0.5)
   pg (~> 0.18)
   pry-rails

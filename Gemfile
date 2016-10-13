@@ -32,6 +32,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'annotate', '~> 2.7', '>= 2.7.1'
   gem 'pry-rails'
+  gem 'china_sms', :github => 'saberma/china_sms'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
