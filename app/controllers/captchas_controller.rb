@@ -13,6 +13,29 @@ class CaptchasController < ApplicationController
     render json: rst
   end
 
-  def show
-  end
+	def show
+		mobile = params[:mobile]
+		code = params[:code]
+		ncode = Captcha.select(:code).where("mobile = ?", mobile).limit(1).order('id desc')
+		result = {msg: "", code: "" ,data: ""}
+		if  code.empty? || ncode.empty?
+			result["msg"] = "验证码不正确"
+			result["code"] = "404"
+			render json: result
+			return
+		end
+		if code != ncode[0]["code"]
+			result["msg"] = "验证码不正确"
+			result["code"] = "401"
+			render json: result
+			return
+		end
+	    if
+			result["msg"] ="验证码成功"
+			result["code"] = :ok
+			render json: result
+			return
+		end
+		
+	end
 end
