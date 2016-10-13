@@ -12,7 +12,7 @@
 
 class Captcha < ApplicationRecord
   before_create do
-    self.code = [*0..9].shuffle[0..3].join
+    self.code = [*0..9].shuffle[0..5].join
   end
 
   after_commit :send_sms_code, on: :create
@@ -21,7 +21,7 @@ class Captcha < ApplicationRecord
     def send_sms_code
       message = "你的验证码是#{self.code}【蝙蝠征信短信平台】"
       ChinaSMS.use :luosimao, username: 'api', password: ENV['SMS_LUOSIMAO_KEY']
-      ChinaSMS.to self.mobile,  message
-      update_columns(send_at: Time.now)
+      rst = ChinaSMS.to self.mobile,  message
+      update_columns(send_at: Time.now) if rst[:success]
     end
 end
