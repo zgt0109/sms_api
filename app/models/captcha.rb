@@ -8,6 +8,15 @@
 #  send_at    :datetime
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  sms_key_id :integer
+#
+# Indexes
+#
+#  index_captchas_on_sms_key_id  (sms_key_id)
+#
+# Foreign Keys
+#
+#  fk_rails_3dd6a133ed  (sms_key_id => sms_keys.id)
 #
 
 class Captcha < ApplicationRecord
