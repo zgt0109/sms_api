@@ -20,7 +20,7 @@ class Captcha < ApplicationRecord
   private
     def send_sms_code
       message = "你的验证码是#{self.code}【蝙蝠征信短信平台】"
-      ChinaSMS.use :luosimao, username: 'api', password: '034f4284bab87d567b52fe4553001e36'
+      ChinaSMS.use :luosimao, username: 'api', password: ENV['SMS_LUOSIMAO_KEY']
       ChinaSMS.to self.mobile,  message
       update_columns(send_at: Time.now)
     end
