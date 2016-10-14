@@ -46,6 +46,7 @@ class Captcha < ApplicationRecord
   private
     def send_sms_code
       # if Rails.env.production?
+      #   message = "你的验证码是#{self.code}【蝙蝠征信短信平台】"
       #   ChinaSMS.use :luosimao, username: 'api', password: ENV['SMS_LUOSIMAO_KEY']
       #   rst = ChinaSMS.to self.mobile,  message
       #   update_columns(send_at: Time.now) if rst[:success]
