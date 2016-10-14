@@ -57,9 +57,11 @@ class Captcha < ApplicationRecord
       if Rails.env.production?
         # 调用云片网第三方平台模板message
         message = "【蝙蝠征信短信平台】您的验证码是#{self.code}。如非本人操作，请忽略本短信"
-        ChinaSMS.use :yunpian, password: '6d705c8d4797345a9607e24c67855e41'
+        binding.pry
+        ChinaSMS.use :yunpian, password: self.sms_key.key
+        # '6d705c8d4797345a9607e24c67855e41'
         rst = ChinaSMS.to self.mobile,  message
-        update_columns(send_at: Time.now) if rst[:ok]
+        update_columns(send_at: Time.now) if rst["msg"] == "OK"
       end
     end
 end

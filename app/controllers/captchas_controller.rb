@@ -1,9 +1,9 @@
 class CaptchasController < ApplicationController
   def create
-    captcha = Captcha.create(mobile: params[:mobile])
+    captcha = current_sms_key.captchas.create(mobile: params[:mobile])
     rst = { data: '', code: '', msg: '' }
     if !captcha.send_at.nil?
-    	captcha.sms_key.key_count.increment!
+    	captcha.sms_key.increment!(:key_count)
       rst[:code] = :created
       rst[:msg] = '短信验证码发送成功'
     else
