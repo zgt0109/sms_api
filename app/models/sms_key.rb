@@ -11,6 +11,8 @@
 #
 
 class SmsKey < ApplicationRecord
+	has_many :captchas
+	
 	#key_val:发送最少的平台的key值
 	attr_accessor: key_val
 	scope :send_before, Proc.new{select(:key).limit(1).order("key_count ASC")}

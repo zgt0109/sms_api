@@ -20,6 +20,8 @@
 #
 
 class Captcha < ApplicationRecord
+  belongs_to :sms_key
+
   validates :mobile, presence: true, format: {
     with: /\A1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\d{8}\z/,
     message: '请输入正确的手机号码。'
@@ -43,9 +45,20 @@ class Captcha < ApplicationRecord
 
   private
     def send_sms_code
-      message = "你的验证码是#{self.code}【蝙蝠征信短信平台】"
-      ChinaSMS.use :luosimao, username: 'api', password: ENV['SMS_LUOSIMAO_KEY']
-      rst = ChinaSMS.to self.mobile,  message
-      update_columns(send_at: Time.now) if rst[:success]
+      # if Rails.env.production?
+      #   ChinaSMS.use :luosimao, username: 'api', password: ENV['SMS_LUOSIMAO_KEY']
+      #   rst = ChinaSMS.to self.mobile,  message
+      #   update_columns(send_at: Time.now) if rst[:success]
+      # else
+      #   update_columns(send_at: Time.now)
+      # end
+
+      if Rails.env.production?
+        # 调用云片网第三方平台模板message
+        message = "【蝙蝠征信短信平台】您的验证码是#{self.code}。如非本人操作，请忽略本短信"
+        ChinaSMS.use :yunpian, password: '6d705c8d4797345a9607e24c67855e41'
+        rst = ChinaSMS.to self.mobile,  message
+        update_columns(send_at: Time.now) if rst[:ok]
+      end
     end
 end
