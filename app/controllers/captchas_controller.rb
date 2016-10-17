@@ -17,23 +17,24 @@ class CaptchasController < ApplicationController
   def show
     mobile = params[:mobile]
     code = params[:code]
-    ncode = Captcha.select(:id, :code).where("mobile = ?", mobile).limit(1).order('id desc')
-    result = {msg: "", code: "" ,data: ""}
+    ncode = Captcha.select(:id, :code, :send_at).where("mobile = ?", mobile).limit(1).order('id desc')
+    result = { data: '', code: '', msg: '' }
     if  code.empty? || ncode.empty?
       result["msg"] = "验证码不正确"
       result["code"] = "404"
-      render json: result
-      return
-    end
-    if code != ncode[0]["code"]
+      return render json: result
+    elsif code != ncode[0]["code"]
       result["msg"] = "验证码不正确"
       result["code"] = "401"
-      render json: result
-      return
+      return render json: result
+    elsif code == ncode[0]["code"] && ncode[0]["send_at"] > 10.minutes.ago
+      result["msg"] ="验证码成功"
+      result["code"] = :ok
+      result["data"] = ncode
+      return render json: result
+    else
+      result["msg"] ="验证码时限已经超过10分钟，请重新获取"
+      return render json: result
     end
-    result["msg"] ="验证码成功"
-    result["code"] = :ok
-    result["data"] = ncode
-    render json: result
   end
 end
