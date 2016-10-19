@@ -43,22 +43,23 @@ class Captcha < ApplicationRecord
 
   after_commit :send_sms_code, on: :create
 
-  private
-    def send_sms_code
-      if Rails.env.production?
-        if self.sms_key.key_type == 'luosimao'
-          # 调用螺丝帽第三方平台模板message
-          message = "你的验证码是#{self.code}【蝙蝠征信短信平台】"
-          ChinaSMS.use :luosimao, username: 'api', password: self.sms_key.key
-          rst = ChinaSMS.to self.mobile,  message
-          update_columns(send_at: Time.now) if rst[:success]
-        elsif self.sms_key.key_type == 'yunpian'
-          # 调用云片网第三方平台模板message
-          message = "【蝙蝠征信短信平台】您的验证码是#{self.code}。如非本人操作，请忽略本短信"
-          ChinaSMS.use :yunpian, password: self.sms_key.key
-          rst = ChinaSMS.to self.mobile,  message
-          update_columns(send_at: Time.now) if rst["msg"] == "OK"
-        end
+  def send_sms_code
+    if Rails.env.production?
+      if self.sms_key.key_type == 'luosimao'
+        # 调用螺丝帽第三方平台模板message
+        message = "你的验证码是#{self.code}【蝙蝠征信短信平台】"
+        SendSmsJob.perform_later(self)
+        ChinaSMS.use :luosimao, username: 'api', password: self.sms_key.key
+        rst = ChinaSMS.to self.mobile,  message
+        update_columns(send_at: Time.now) if rst[:success]
+      elsif self.sms_key.key_type == 'yunpian'
+        # 调用云片网第三方平台模板message
+        message = "【蝙蝠征信短信平台】您的验证码是#{self.code}。如非本人操作，请忽略本短信"
+        SendSmsJob.perform_later(self)
+        ChinaSMS.use :yunpian, password: self.sms_key.key
+        rst = ChinaSMS.to self.mobile,  message
+        update_columns(send_at: Time.now) if rst["msg"] == "OK"
       end
     end
+  end
 end

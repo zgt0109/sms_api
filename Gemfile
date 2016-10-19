@@ -34,6 +34,8 @@ group :development do
   gem 'pry-rails'
   gem 'china_sms', :github => 'saberma/china_sms'
   gem 'dotenv-rails'
+  gem 'sidekiq'
+  gem 'sinatra', :require => nil
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
