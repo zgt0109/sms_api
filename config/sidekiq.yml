@@ -1,11 +1,13 @@
 ---
-:concurrency: 5
+:concurrency: 5 # 并发数
 :pidfile: tmp/pids/sidekiq.pid
-:logfile: ./log/sidekiq.log
+:logfile: ./log/sidekiq.log # 输出的日志地址
 :verbose: false
+development:
+  :concurrency: 5
 staging:
   :concurrency: 10
 production:
   :concurrency: 20
 :queues:
-  - default
+  - default # 写在队列参数中的, 表示让 sidekiq 处理这个 queue
