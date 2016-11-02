@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.6.1'
 
-set :application, 'bianfu_sms_api'
+set :application, 'sms_api'
 set :repo_url, 'git@github.com:zgt0109/sms_api.git'
 
 # Default branch is :master
@@ -39,4 +39,3 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/syst
 set :nginx_sites_available_path, "/etc/nginx/sites-available"
 set :nginx_sites_enabled_path, "/etc/nginx/sites-enabled"
 set :nginx_server_name, "zgt.sisning.com"
-
